@@ -6,7 +6,11 @@ import { NavParams } from 'ionic-angular';
   templateUrl: 'suggestion.html'
 })
 export class SuggestionPage {
+  release: Object;
+  suggestions: Object;
+
   constructor(params: NavParams) {
-    console.log('suggestion', params.get('suggestion'));
+    this.release = params.get('release');
+    this.suggestions = params.get('suggestions');
   }
 }

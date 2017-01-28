@@ -15,6 +15,7 @@ export class HomePage {
   key: string;
   secret: string;
   query: string;
+  userToken: string;
   results: Array<Object>;
 
   constructor(
@@ -22,14 +23,13 @@ export class HomePage {
     public navCtrl: NavController,
     private http: Http
   ) {
-    this.key = 'SRtFMOmBIISBTocJEpqh';
-    this.secret = 'pleALhMufWjNEgfQFgtHeJOrHgfmzmIt';
     this.query = 'Kamasi Washington The Epic';
+    this.userToken = 'BDmpECbCiWhJZVbzwfbIbSYySlKWUOEPDEoGPwsW';
     this.results = [];
   }
 
   public search(): void {
-    const url = `https://api.discogs.com/database/search?q=${this.query}&type=release&format=LP&key=${this.key}&secret=${this.secret}`;
+    const url = `https://api.discogs.com/database/search?q=${this.query}&type=release&format=LP&token=${this.userToken}`;
 
     this.http
       .get(url)
@@ -40,15 +40,24 @@ export class HomePage {
       .catch(this.handleError);
   }
 
-  public suggestion(releaseId: number): void {
-    const url = `https://api.discogs.com/marketplace/price_suggestions/${releaseId}`;
+  public suggestion(release): void {
+    const releaseId = release.id;
+    const url = `https://api.discogs.com/marketplace/price_suggestions/${releaseId}?token=${this.userToken}`;
 
     this.http
       .get(url)
       .toPromise()
       .then(response => {
-        this.suggestion = response.json().results;
-        let suggestionModal = this.modalCtrl.create(SuggestionPage, { suggestion: this.suggestion });
+        const suggestions = response.json();
+        const suggestionModal = this.modalCtrl.create(SuggestionPage, {
+          release: release,
+          suggestions: Object.keys(suggestions).map(k => {
+            return {
+              key: k,
+              value: suggestions[k]
+            };
+          })
+        });
         suggestionModal.present();
       })
       .catch(this.handleError);

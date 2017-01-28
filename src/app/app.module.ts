@@ -3,11 +3,13 @@ import { FormsModule } from '@angular/forms';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
+import { SuggestionPage } from '../pages/suggestion/suggestion';
 
 @NgModule({
   declarations: [
     MyApp,
-    HomePage
+    HomePage,
+    SuggestionPage
   ],
   imports: [
     FormsModule,
@@ -16,7 +18,8 @@ import { HomePage } from '../pages/home/home';
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    HomePage
+    HomePage,
+    SuggestionPage
   ],
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}]
 })
