@@ -3,6 +3,9 @@ import { Http } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 
 import { NavController } from 'ionic-angular';
+import { ModalController } from 'ionic-angular';
+
+import { SuggestionPage } from '../suggestion/suggestion';
 
 @Component({
   selector: 'page-home',
@@ -15,6 +18,7 @@ export class HomePage {
   results: Array<Object>;
 
   constructor(
+    public modalCtrl: ModalController,
     public navCtrl: NavController,
     private http: Http
   ) {
@@ -36,12 +40,21 @@ export class HomePage {
       .catch(this.handleError);
   }
 
-  public suggestion(release_id: number): void {
-    const url = `https://api.discogs.com/database/marketplace/price_suggestions/${release_id}&key=${this.key}&secret=${this.secret}`;
+  public suggestion(releaseId: number): void {
+    const url = `https://api.discogs.com/marketplace/price_suggestions/${releaseId}`;
+
+    this.http
+      .get(url)
+      .toPromise()
+      .then(response => {
+        this.suggestion = response.json().results;
+        let suggestionModal = this.modalCtrl.create(SuggestionPage, { suggestion: this.suggestion });
+        suggestionModal.present();
+      })
+      .catch(this.handleError);
   }
 
   private handleError(error: any): Promise<any> {
-    console.error('An error occurred', error); // for demo purposes only
     return Promise.reject(error.message || error);
   }
 }
