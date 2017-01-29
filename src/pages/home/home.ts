@@ -2,9 +2,7 @@ import { Component } from '@angular/core';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 
-import { NavController } from 'ionic-angular';
-import { ModalController } from 'ionic-angular';
-
+import { Loading, LoadingController, ModalController, NavController } from 'ionic-angular';
 import { SuggestionPage } from '../suggestion/suggestion';
 
 @Component({
@@ -17,8 +15,10 @@ export class HomePage {
   query: string;
   userToken: string;
   results: Array<Object>;
+  loading: Loading;
 
   constructor(
+    public loadingCtrl: LoadingController,
     public modalCtrl: ModalController,
     public navCtrl: NavController,
     private http: Http
@@ -30,12 +30,15 @@ export class HomePage {
 
   public search(): void {
     const url = `https://api.discogs.com/database/search?q=${this.query}&type=release&format=LP&token=${this.userToken}`;
+    const loading = this.createLoader();
+    loading.present();
 
     this.http
       .get(url)
       .toPromise()
       .then(response => {
         this.results = response.json().results;
+        loading.dismiss();
       })
       .catch(this.handleError);
   }
@@ -43,6 +46,8 @@ export class HomePage {
   public suggestion(release): void {
     const releaseId = release.id;
     const url = `https://api.discogs.com/marketplace/price_suggestions/${releaseId}?token=${this.userToken}`;
+    const loading = this.createLoader();
+    loading.present();
 
     this.http
       .get(url)
@@ -59,8 +64,15 @@ export class HomePage {
           })
         });
         suggestionModal.present();
+        loading.dismiss();
       })
       .catch(this.handleError);
+  }
+
+  private createLoader(): Loading {
+    return this.loadingCtrl.create({
+      content: 'Please wait...'
+    });
   }
 
   private handleError(error: any): Promise<any> {

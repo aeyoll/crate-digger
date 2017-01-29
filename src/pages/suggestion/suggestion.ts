@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavParams } from 'ionic-angular';
+import { NavParams, ViewController } from 'ionic-angular';
 
 @Component({
   selector: 'page-suggestion',
@@ -9,8 +9,15 @@ export class SuggestionPage {
   release: Object;
   suggestions: Object;
 
-  constructor(params: NavParams) {
+  constructor(
+    public params: NavParams,
+    public viewCtrl: ViewController
+  ) {
     this.release = params.get('release');
     this.suggestions = params.get('suggestions');
+  }
+
+  public dismiss() {
+    this.viewCtrl.dismiss();
   }
 }
