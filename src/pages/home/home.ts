@@ -63,6 +63,20 @@ export class HomePage {
               value: accounting.formatMoney(parseFloat(suggestions[k].value), { symbol: suggestions[k].currency, format: "%v %s" }, 2, '.', ',')
             };
           })
+          .sort(function (a, b) {
+            const labels = [
+              'Mint (M)',
+              'Near Mint (NM or M-)',
+              'Very Good Plus (VG+)',
+              'Very Good (VG)',
+              'Good Plus (G+)',
+              'Good (G)',
+              'Fair (F)',
+              'Poor (P)',
+            ];
+
+            return labels.indexOf(a.key) - labels.indexOf(b.key);
+          })
         });
         suggestionModal.present();
         loading.dismiss();
