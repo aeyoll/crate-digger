@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Http } from '@angular/http';
+import accounting from 'accounting-js';
 import 'rxjs/add/operator/toPromise';
 
 import { Loading, LoadingController, ModalController, NavController } from 'ionic-angular';
@@ -59,7 +60,7 @@ export class HomePage {
           suggestions: Object.keys(suggestions).map(k => {
             return {
               key: k,
-              value: suggestions[k]
+              value: accounting.formatMoney(parseFloat(suggestions[k].value), { symbol: suggestions[k].currency, format: "%v %s" }, 2, '.', ',')
             };
           })
         });
