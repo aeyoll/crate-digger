@@ -1,5 +1,5 @@
 {
-  "name": "ionic-hello-world",
+  "name": "crate-digger-ionic",
   "author": "Ionic Framework",
   "homepage": "http://ionicframework.com/",
   "private": true,
@@ -48,5 +48,5 @@
       "locator": "ios"
     }
   ],
-  "description": "crate-digger-ionic: An Ionic project"
+  "description": "Crate Digger: Digging companion"
 }
