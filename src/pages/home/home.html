@@ -24,7 +24,10 @@
         <img src="{{result.thumb}}">
       </ion-thumbnail>
       <h2>{{result.title}}</h2>
-      <p><span *ngFor="let format of result.format">{{format}} </span>• {{result.year}}</p>
+      <p><span *ngFor="let format of result.format">{{format}} </span></p>
+      <p>{{result.year}}</p>
+      <p>Cat. N°: {{result.catno}}</p>
+      <p>{{result.country}}</p>
       <button ion-button clear item-right (click)="suggestion(result)">View</button>
     </ion-item>
   </ion-list>

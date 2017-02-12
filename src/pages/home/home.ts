@@ -24,7 +24,7 @@ export class HomePage {
     public navCtrl: NavController,
     private http: Http
   ) {
-    this.query = 'Kamasi Washington The Epic';
+    this.query = '';
     this.userToken = 'BDmpECbCiWhJZVbzwfbIbSYySlKWUOEPDEoGPwsW';
     this.results = [];
   }
@@ -37,8 +37,8 @@ export class HomePage {
     this.http
       .get(url)
       .toPromise()
-      .then(response => {
-        this.results = response.json().results;
+      .then(response => {;
+        this.results = response.json().results.sort((a, b) => parseInt(a.year, 10) - parseInt(b.year, 10));
         loading.dismiss();
       })
       .catch(this.handleError);

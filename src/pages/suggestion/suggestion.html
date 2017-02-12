@@ -19,7 +19,10 @@
         <img src="{{release.thumb}}">
       </ion-avatar>
       <h2>{{release.title}}</h2>
-      <p><span *ngFor="let format of release.format">{{format}} </span>• {{release.year}}</p>
+      <p><span *ngFor="let format of release.format">{{format}} </span></p>
+      <p>{{release.year}}</p>
+      <p>Cat. N°: {{release.catno}}</p>
+      <p>{{release.country}}</p>
     </ion-item>
 
     <ion-item *ngFor="let suggestion of suggestions;">
