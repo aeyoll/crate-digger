@@ -1,6 +1,10 @@
 import { NgModule, ErrorHandler } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
+import { SplashScreen } from "@ionic-native/splash-screen";
+import { StatusBar } from "@ionic-native/status-bar";
+import { BrowserModule } from '@angular/platform-browser';
+import { HttpModule } from '@angular/http';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { SuggestionPage } from '../pages/suggestion/suggestion';
@@ -12,6 +16,8 @@ import { SuggestionPage } from '../pages/suggestion/suggestion';
     SuggestionPage
   ],
   imports: [
+    BrowserModule,
+    HttpModule,
     FormsModule,
     IonicModule.forRoot(MyApp)
   ],
@@ -21,6 +27,10 @@ import { SuggestionPage } from '../pages/suggestion/suggestion';
     HomePage,
     SuggestionPage
   ],
-  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}]
+  providers: [
+    StatusBar,
+    SplashScreen,
+    {provide: ErrorHandler, useClass: IonicErrorHandler}
+  ]
 })
 export class AppModule {}
